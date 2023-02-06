@@ -18,8 +18,6 @@ def browser(request):
     options = Options()
     options.add_experimental_option(
         'prefs', {'intl.accept_languages': user_language})
-    print('\n',options)
-
     options_firefox = OptionsFirefox()
     options_firefox.set_preference("intl.accept_languages", user_language)
     browser = None

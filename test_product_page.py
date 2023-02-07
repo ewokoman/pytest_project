@@ -1,5 +1,6 @@
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
+from .pages.login_page import LoginPage
 import pytest
 import time
 
@@ -62,11 +63,41 @@ import time
 #     page.go_to_login_page()
 
 
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
-    page = BasketPage(browser, link)
-    page.open()
-    page.go_to_basket()
-    page.busket_is_empty()
-    page.text_basket_is_empty()
-    time.sleep(2)
+# def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+#     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+#     page = BasketPage(browser, link)
+#     page.open()
+#     page.go_to_basket()
+#     page.busket_is_empty()
+#     page.text_basket_is_empty()
+#     time.sleep(2)
+
+
+class  TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = 'http://selenium1py.pythonanywhere.com/ru/accounts/login/'
+        page = LoginPage(browser, link, 0)
+        page.open()
+        email = 'ewokoman' + str(time.time()) + "@fakemail.org"
+        password = 'TestSomeRegistration123'
+        page.register_new_user(email=email, password=password)
+        page.should_be_authorized_user()
+
+
+    def test_user_cant_see_success_message(self, browser):
+        link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+        page = ProductPage(browser, link, 0)
+        page.open()
+        page.should_not_be_success_message()
+        time.sleep(10)
+
+
+    def test_user_can_add_product(self, browser):
+        link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_product_to_bucket()
+        page.check_product_name_add()
+        page.check_product_price_add()
+        time.sleep(10)

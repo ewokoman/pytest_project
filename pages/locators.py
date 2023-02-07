@@ -14,3 +14,4 @@ class ProductPageLocators():
     ADD_PRODUCT_TO_BUCKET = (By.CSS_SELECTOR, ".alertinner > strong")
     PRICE_PRODUCT = (By.CSS_SELECTOR, ".product_main > .price_color")
     BUCKET_PRICE = (By.CSS_SELECTOR, ".alertinner > p > strong")
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, ".alert-success")

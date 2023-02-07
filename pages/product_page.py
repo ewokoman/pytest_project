@@ -16,3 +16,11 @@ class ProductPage(BasePage):
         product_price = self.browser.find_element(*ProductPageLocators.PRICE_PRODUCT).text
         bucket_price = self.browser.find_element(*ProductPageLocators.BUCKET_PRICE).text
         assert product_price==bucket_price, f"add {product_price}, but added {bucket_price}"
+    
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+        "Success message is presented, but should not be"
+
+    def is_disappeared_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+        "is_disappeared_message"
